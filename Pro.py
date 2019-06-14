@@ -1378,7 +1378,7 @@ class TApp(arcade.Window):
                 self.MenuItemSelected = 98
 
     def drawState7(self):
-        self.vernotvet=3
+        self.vernotvet=4
         #print("ghjghj", self.userBadAnswers)
         otvet=-1
         # Игра Детектив 3
@@ -1422,20 +1422,20 @@ class TApp(arcade.Window):
         """ Загрузка картинок """
         #files1 = os.listdir(self.detectivePath2)
 
-        self.imgDetectives2 = arcade.SpriteList()
+        self.imgDetectives3 = arcade.SpriteList()
 
         for i in files1:
             if self.userChoiceCards==0:
-                self.imgDetective2 = arcade.Sprite(self.detectivePath1+i, 1)
+                self.imgDetective3 = arcade.Sprite(self.detectivePath1+i, 1)
             elif self.userChoiceCards == 1:
-                self.imgDetective2 = arcade.Sprite(self.detectivePath2+i, 1)
+                self.imgDetective3 = arcade.Sprite(self.detectivePath2+i, 1)
             else:
-                self.imgDetective2 = arcade.Sprite(self.detectivePath1+i, 1)
-            self.imgDetective2.width = 150
-            self.imgDetective2.height = 200
-            self.imgDetective2.center_x = 0
-            self.imgDetective2.center_y = 0
-            self.imgDetectives2.append(self.imgDetective2)
+                self.imgDetective3 = arcade.Sprite(self.detectivePath1+i, 1)
+            self.imgDetective3.width = 150
+            self.imgDetective3.height = 200
+            self.imgDetective3.center_x = 0
+            self.imgDetective3.center_y = 0
+            self.imgDetectives3.append(self.imgDetective3)
 
         #-------------
 
@@ -1471,32 +1471,32 @@ class TApp(arcade.Window):
         #------------------------------
 
         # Вывод конкретного спрайта
-        w=self.imgDetectives1.sprite_list[1].width
-        h=self.imgDetectives1.sprite_list[1].height
+        w=self.imgDetectives3.sprite_list[1].width
+        h=self.imgDetectives3.sprite_list[1].height
         counter = 3
         s = 20
         x = self.SCREEN_WIDTH // 2 - (counter * w) //2.3
         y = self.SCREEN_HEIGHT // 4
         for i in self.RAND2:
-            self.imgDetectives1.sprite_list[i].center_x = x
+            self.imgDetectives3.sprite_list[i].center_x = x
             x += w + s
-            self.imgDetectives1.sprite_list[i].center_y = y
+            self.imgDetectives3.sprite_list[i].center_y = y
             counter -=1
             if counter <=0:
                 counter = 3
                 x = self.SCREEN_WIDTH // 2 - (counter * w) // 2.3
                 y += h + s
 
-            self.imgDetectives1.sprite_list[i].draw()
+            self.imgDetectives3.sprite_list[i].draw()
             # Определяем попадание курсора на аватар
-            bottom =self.mouseY > self.imgDetectives1.sprite_list[i].center_y - self.imgDetectives1.sprite_list[i].height // 2
-            top = self.mouseY < self.imgDetectives1.sprite_list[i].center_y + self.imgDetectives1.sprite_list[i].height // 2
+            bottom =self.mouseY > self.imgDetectives3.sprite_list[i].center_y - self.imgDetectives3.sprite_list[i].height // 2
+            top = self.mouseY < self.imgDetectives3.sprite_list[i].center_y + self.imgDetectives3.sprite_list[i].height // 2
 
-            left = self.mouseX > self.imgDetectives1.sprite_list[i].center_x - self.imgDetectives1.sprite_list[i].width // 2
-            right = self.mouseX < self.imgDetectives1.sprite_list[i].center_x + self.imgDetectives1.sprite_list[i].width // 2
+            left = self.mouseX > self.imgDetectives3.sprite_list[i].center_x - self.imgDetectives3.sprite_list[i].width // 2
+            right = self.mouseX < self.imgDetectives3.sprite_list[i].center_x + self.imgDetectives3.sprite_list[i].width // 2
 
             if (bottom and top) and (left and right):
-                arcade.draw_rectangle_outline(self.imgDetectives1.sprite_list[i].center_x,self.imgDetectives1.sprite_list[i].center_y,self.imgDetectives1.sprite_list[i].width,self.imgDetectives1.sprite_list[i].height,color=arcade.color.FELDSPAR)
+                arcade.draw_rectangle_outline(self.imgDetectives3.sprite_list[i].center_x,self.imgDetectives3.sprite_list[i].center_y,self.imgDetectives3.sprite_list[i].width,self.imgDetectives3.sprite_list[i].height,color=arcade.color.FELDSPAR)
                 if self.isMouseDown:
                     self.otvet=i
                     if (self.otvet==self.vernotvet) and (self.tri_one==0):
@@ -1831,7 +1831,7 @@ class TApp(arcade.Window):
                 self.MenuItemSelected = 98
 
     def drawState9(self):
-        self.vernotvet=5
+        self.vernotvet=4
         # Игра Подбери маску 3
         text = "Игра Подбери маску"
         self.text = "Подбери маску 3"
@@ -1939,14 +1939,14 @@ class TApp(arcade.Window):
         my = self.mouseY
         width = 400
         height=15
-        self.MenuItemSelected = 8
+        self.MenuItemSelected = 9
 
         for i in range(0,self.MenuLasti):
             text = self.Menu[self.MenuFirst2+i]
             text_size = 35
             x = self.SCREEN_WIDTH // 1.2
             y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
-            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+            if my>y-height and my<y+height and mx>x-width//4 and mx<x+width//2:
                 color = self.menucolorselected
                 self.sl=2
                 self.MenuItemSelected = 97
@@ -2187,7 +2187,11 @@ class TApp(arcade.Window):
 
         #Создаем сами картинки
 
-        files = os.listdir(self.detectivePath1)
+        
+        if self.userChoiceCards==0:
+            files = os.listdir(self.detectivePath1)
+        elif self.userChoiceCards==1:
+            files = os.listdir(self.detectivePath2)
 
         self.imgPytns_1 = arcade.SpriteList()
 
@@ -2195,7 +2199,13 @@ class TApp(arcade.Window):
             for i in files:
                 k=str(self.RAND_1[j]+1)+'.jpg'
                 if str(i)==k:
-                    self.imgPytn = arcade.Sprite(self.detectivePath1+i, 1)
+                    
+                    if self.userChoiceCards==0:
+                        self.imgPytn = arcade.Sprite(self.detectivePath1+i, 1)
+                    
+                    elif self.userChoiceCards == 1:
+                        self.imgPytn = arcade.Sprite(self.detectivePath2+i, 1)
+                    #self.imgPytn = arcade.Sprite(self.detectivePath1+i, 1)
                     self.imgPytn.width = 150
                     self.imgPytn.height = 250
                     self.imgPytn.center_x = 0
@@ -2462,7 +2472,7 @@ class TApp(arcade.Window):
                 self.state=2
             elif self.state == 6:
                 self.state=3
-            elif self.state > 6 and self.state < 10:
+            elif self.state > 6 and self.state < 12:
                 self.state=self.state-1
             #elif self.state == 9:
             #    self.state=6
@@ -2503,7 +2513,7 @@ class TApp(arcade.Window):
             if self.MenuItemSelected == 51:
                 self.state = self.MenuItemSelected
 
-            if self.MenuItemSelected>0 and self.MenuItemSelected <=15:
+            if self.MenuItemSelected>0 and self.MenuItemSelected <=20:
                 print("Перключаемся в состояние %s"%(self.MenuItemSelected))
                 self.state = self.MenuItemSelected
 
