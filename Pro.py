@@ -23,14 +23,14 @@ class TApp(arcade.Window):
             #print(j)
             self.RAND.append(j)
         random.shuffle(self.RAND)
-        print(self.RAND)
+        #print(self.RAND)
 
         self.RAND1=[]
         for j in range(0,4):
             #print(j)
             self.RAND1.append(j)
         random.shuffle(self.RAND1)
-        print(self.RAND1)
+        #print(self.RAND1)
 
         self.RAND2=[]
         for j in range(0,6):
@@ -45,7 +45,23 @@ class TApp(arcade.Window):
             for g in range(0,2):    
                 self.RAND_1.append(k)
         random.shuffle(self.RAND_1)
-        print(self.RAND_1)
+        #print(self.RAND_1)
+
+        self.RAND_2=[]
+        for j in range(0,3):
+            k=random.randint(0,5)
+            for g in range(0,2):    
+                self.RAND_2.append(k)
+        random.shuffle(self.RAND_2)
+        #print(self.RAND_2)
+
+        self.RAND_3=[]
+        for j in range(0,3):
+            k=random.randint(0,5)
+            for g in range(0,2):    
+                self.RAND_3.append(k)
+        random.shuffle(self.RAND_3)
+        #print(self.RAND_3)
 
         # Заголовок окна
         self.title = "Game"
@@ -103,6 +119,8 @@ class TApp(arcade.Window):
         self.detectivePath4=self.detectivePath+"3/"
         self.detectivePath5=self.detectivePath+"4/"
         self.detectivePath6=self.detectivePath+"5/"
+        self.detectivePath7=self.detectivePath+"6/"
+        self.detectivePath8=self.detectivePath+"7/"
         self.menu1 = self.imgPath+"cards/menu/girl/"
         self.menu2 = self.imgPath+"cards/menu/boy/"
         self.soundPath = "sounds/"
@@ -110,6 +128,7 @@ class TApp(arcade.Window):
         self.savePath = "save"
         self.aboutLogo1 = arcade.Sprite(self.GUIPath + "1.jpg", 0.4)
         self.aboutLogo3 = arcade.Sprite(self.detectivePath4 + "2.jpg",0.3)
+        self.aboutLogo4 = arcade.Sprite(self.imgPath + "megaphone.png", 0.09)
         self.Fon = arcade.Sprite(self.imgPath + "fon.png", 0.32)
         self.Strelka = arcade.Sprite(self.imgPath + "Strelka.png", 0.32)
         self.Strelka1 = arcade.Sprite(self.imgPath + "Strelka2.png", 0.32)
@@ -132,8 +151,8 @@ class TApp(arcade.Window):
 
     def setFonts(self):
         # шрифты отсюда https://fonts.google.com/?selection.family=Russo+One&subset=cyrillic&sort=popularity
-        self.font_title="Comic Sans MS"
-        self.font = "Comic Sans MS"
+        self.font_title="fonts/IrinaCTT.ttf"
+        self.font = "fonts/IrinaCTT.ttf"
 
     def setColors(self):
         """ Задаем основные цвета """
@@ -229,6 +248,12 @@ class TApp(arcade.Window):
         elif self.state == 9:
             # Рисуем игру Подбери маску 3
             self.drawState9()
+        elif self.state == 10:
+            # Рисуем игру Подбери маску 3
+            self.drawState10()
+        elif self.state == 11:
+            # Рисуем игру Подбери маску 3
+            self.drawState11()
         elif self.state == 50:
             # Рисуем О программе
             self.drawAbout()
@@ -329,6 +354,14 @@ class TApp(arcade.Window):
         load_sound_library()
         sound.play()
 
+    def stop_sound(sound: pyglet.media.Source):
+        """
+        Stop a sound that is currently playing.
+
+        :param sound:
+        """
+        sound.pause()
+
 
     def drawState0(self):
         # Выбор аватара
@@ -337,7 +370,7 @@ class TApp(arcade.Window):
         color = self.titlecolor
         text_size = 44
         x = self.SCREEN_WIDTH // 3
-        y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 9
+        y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 9 + 10
         arcade.draw_text(text,x, y,color, text_size, anchor_y = "center",font_name = self.font_title)
         #arcade.draw_rectangle_outline(660,680,450,65,color=arcade.color.RED)
                
@@ -487,7 +520,62 @@ class TApp(arcade.Window):
                 if self.isMouseDown:
                     self.userChoiceCards=i
                     self.MenuItemSelected = 2
-        print('выбрали набор карточек ',self.userChoiceCards)
+        #print('выбрали набор карточек ',self.userChoiceCards)
+
+        # Стрелка
+        self.Strelka1.center_x =self.Strelka1.width // 3
+        self.Strelka1.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka1.draw()
+        
+        # Назад
+        self.MenuFirst2 = 9
+        self.MenuLasti = 1
+
+        mx = self.mouseX
+        my = self.mouseY
+        width = 400
+        height=15
+        self.MenuItemSelected_2 = -1
+
+        for i in range(0,self.MenuLasti):
+            text = "Назад"
+            text_size = 35
+            x = self.Strelka1.width//9
+            y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+                color = self.menucolorselected
+                self.MenuItemSelected = 0
+            else:
+                color = self.menucolor
+            arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
+        
+        # Стрелка
+        self.Strelka.center_x = self.SCREEN_WIDTH // 1.3 + 35
+        self.Strelka.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka.draw()
+
+        # Дальше
+        self.MenuFirst2 = 9
+        self.MenuLasti = 1
+
+        mx = self.mouseX
+        my = self.mouseY
+        width = 400
+        height=15
+        self.MenuItemSelected_2 = -1
+
+        for i in range(0,self.MenuLasti):
+            text = self.Menu[self.MenuFirst2+i]
+            text_size = 35
+            x = self.SCREEN_WIDTH // 1.3
+            y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+                color = self.menucolorselected
+                self.MenuItemSelected = 2
+            else:
+                color = self.menucolor
+            arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
+
 
         # Рисуем крестик
         self.aboutLogo1.center_x = self.SCREEN_WIDTH - 0.5*self.aboutLogo1.width
@@ -582,6 +670,8 @@ class TApp(arcade.Window):
 
         self.schet_card = 1
         self.coin=[0,0,0,0]
+        self.coin_2=[0,0,0,0,0,0]
+        self.coin_3=[0,0,0,0,0,0]
 
         
     def drawAbout(self):
@@ -617,14 +707,14 @@ class TApp(arcade.Window):
         y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 3
         arcade.draw_text(text,x, y,color, text_size, anchor_y = "center",font_name = self.font)
 
-        text = "Гобу Мурманской области центр психолого-педагогической,"
+        text = 'Гобу МО "Центр психолого-педагогической,'
         color = self.subtitlecolor
         text_size = 20
-        x = self.SCREEN_WIDTH // 3.9
+        x = self.SCREEN_WIDTH // 3
         y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 3 - 40
         arcade.draw_text(text,x, y,color, text_size, anchor_y = "center",font_name = self.font)
 
-        text = "медицинской и социальной помощи"
+        text = 'медицинской и социальной помощи"'
         color = self.subtitlecolor
         text_size = 20
         x = self.SCREEN_WIDTH // 2.9
@@ -671,7 +761,7 @@ class TApp(arcade.Window):
 
         mx = self.mouseX
         my = self.mouseY
-        width = 350
+        width = 400
         height=15
         self.MenuItemSelected_2 = -1
 
@@ -926,6 +1016,7 @@ class TApp(arcade.Window):
         self.odin=0
         self.dva=0
         self.tri=0
+        self.e=0
         '''for i in range(0,self.MenuLastii):
             text = self.Menu[self.MenuFirst1+i]
             text_size = 35
@@ -938,6 +1029,34 @@ class TApp(arcade.Window):
                 color = self.menucolor
             arcade.draw_text(text, x, y,color, text_size, anchor_y = "center",font_name = self.font_title)
 '''
+        # Стрелка
+        self.Strelka1.center_x =self.Strelka1.width // 3
+        self.Strelka1.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka1.draw()
+        
+        # Назад
+        self.MenuFirst2 = 9
+        self.MenuLasti = 1
+
+        mx = self.mouseX
+        my = self.mouseY
+        width = 400
+        height=15
+        self.MenuItemSelected_2 = -1
+
+        for i in range(0,self.MenuLasti):
+            text = "Назад"
+            text_size = 35
+            x = self.Strelka1.width//9
+            y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+                color = self.menucolorselected
+                self.MenuItemSelected = 1
+            else:
+                color = self.menucolor
+            arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
+        
+
         # Рисуем крестик
         self.aboutLogo1.center_x = self.SCREEN_WIDTH - 0.5*self.aboutLogo1.width
         self.aboutLogo1.center_y = self.SCREEN_HEIGHT -(0.5*self.aboutLogo1.height)
@@ -972,13 +1091,13 @@ class TApp(arcade.Window):
         #print(self.userChoiceCards)
 
         if self.userChoiceCards==0:
-            text = "Найти девочку, которой подарили подарок"
+            text = "Найди девочку, которой подарили подарок"
             text2 = "Какое у неё настроение?"
             files1 = os.listdir(self.detectivePath1)
             if self.odin==0:
                 self.StateSound()
         elif self.userChoiceCards == 1:
-            text = "Найти мальчика, которому подарили подарок"
+            text = "Найди мальчика, которому подарили подарок"
             text2 = "Какое у него настроение?"
             files1 = os.listdir(self.detectivePath2)
             if self.odin==0:
@@ -1015,6 +1134,34 @@ class TApp(arcade.Window):
             self.imgDetectives1.append(self.imgDetective1)
 
         #-------------
+
+        # Стрелка
+        self.Strelka1.center_x =self.Strelka1.width // 3
+        self.Strelka1.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka1.draw()
+        
+        # Назад
+        self.MenuFirst2 = 9
+        self.MenuLasti = 1
+
+        mx = self.mouseX
+        my = self.mouseY
+        width = 400
+        height=15
+        self.MenuItemSelected_2 = -1
+
+        for i in range(0,self.MenuLasti):
+            text = "Назад"
+            text_size = 35
+            x = self.Strelka1.width//9
+            y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+                color = self.menucolorselected
+                self.MenuItemSelected = 2
+            else:
+                color = self.menucolor
+            arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
+        
 
 
         # Стрелка
@@ -1082,20 +1229,6 @@ class TApp(arcade.Window):
                         self.StateSound()
                     elif (self.otvet!=self.vernotvet) and (self.tri_two==0):
                         self.StateSound()
-                    """if i==0:
-                        print('dthyj')
-                        self.userGoodAnswers+=1
-                        print(self.userGoodAnswers)
-                    else:
-                        print('----')
-                        self.userBadAnswers+=1
-                        print(self.userBadAnswers)"""
-                    #self.userAvatar = i
-                    #print(otvet)
-                '''if i==0:
-                    self.userGoodAnswers+=1
-                else:
-                    self.userBadAnswers+=1'''
 
         # Рисуем крестик
         self.aboutLogo1.center_x = self.SCREEN_WIDTH - 0.5*self.aboutLogo1.width
@@ -1113,107 +1246,140 @@ class TApp(arcade.Window):
             if self.isMouseDown:
                 self.MenuItemSelected = 98
 
+        # Рисуем мегафон
+        self.aboutLogo4.center_x = self.SCREEN_WIDTH - 0.5*self.aboutLogo4.width
+        self.aboutLogo4.center_y = self.SCREEN_HEIGHT -(1.2*self.aboutLogo4.height)
+        self.aboutLogo4.draw()
+        # Определяем попадание курсора на крестик
+        bottom =self.mouseY > self.aboutLogo4.center_y - self.aboutLogo4.height // 2
+        top = self.mouseY < self.aboutLogo4.center_y + self.aboutLogo4.height // 2
+
+        left = self.mouseX > self.aboutLogo4.center_x - self.aboutLogo4.width // 2
+        right = self.mouseX < self.aboutLogo4.center_x + self.aboutLogo4.width // 2
+
+        if (bottom and top) and (left and right):
+            arcade.draw_rectangle_outline(self.aboutLogo4.center_x,self.aboutLogo4.center_y,self.aboutLogo4.width,self.aboutLogo4.height,color=arcade.color.FELDSPAR)
+            if (self.isMouseDown) and (self.tri_one==0):
+                self.odin=0
+                self.StateSound()
+
+                
+                
+                
+
     def StateSound(self):
         if self.text=="Детектив 1":
             if (self.userChoiceCards==0) and (self.odin==0):
-                arcade.play_sound('music/Детектив 1 0.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 1 0.wav'))
                 self.odin=1
                 self.state == 3
+                self.tri_one=1
             elif (self.userChoiceCards==1) and (self.odin==0):
-                arcade.play_sound('music/Детектив 1 1.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 1 1.wav'))
                 self.odin=1
                 self.state == 3
+                self.tri_one=1
             elif (self.otvet==self.vernotvet) and (self.tri_one==0):
-                arcade.play_sound('music/Детектив 3 3.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 3.wav'))
                 self.tri_one=1
                 self.state == 3
             elif (self.otvet!=self.vernotvet) and (self.tri_two==0):
-                arcade.play_sound('music/Детектив 3 4.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 4.wav'))
                 self.tri_two=1
                 self.state == 3
         elif self.text=="Детектив 2":
             if (self.userChoiceCards==0) and (self.dva==0):
-                arcade.play_sound('music/Детектив 2 0.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 2 0.wav'))
                 self.dva=1
                 self.state == 6
+                self.tri_one=1
             elif (self.userChoiceCards==1) and (self.dva==0):
-                arcade.play_sound('music/Детектив 2 1.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 2 1.wav'))
                 self.dva=1
                 self.state == 6
+                self.tri_one=1
             elif (self.otvet==self.vernotvet) and (self.tri_one==0):
-                arcade.play_sound('music/Детектив 3 3.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 3.wav'))
                 self.tri_one=1
                 self.state == 6
             elif (self.otvet!=self.vernotvet) and (self.tri_two==0):
-                arcade.play_sound('music/Детектив 3 4.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 4.wav'))
                 self.tri_two=1
                 self.state == 6
         elif self.text=="Детектив 3":
             if (self.userChoiceCards==0) and (self.tri==0):
-                arcade.play_sound('music/Детектив 3 0.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 0.wav'))
                 self.tri=1
                 self.state == 7
+                self.tri_one=1
             elif (self.userChoiceCards==1) and (self.tri==0):
-                arcade.play_sound('music/Детектив 3 1.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 1.wav'))
                 self.tri=1
                 self.state == 7
+                self.tri_one=1
             elif (self.otvet==self.vernotvet) and (self.tri_one==0):
-                arcade.play_sound('music/Детектив 3 3.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 3.wav'))
                 self.tri_one=1
                 self.state == 7
             elif (self.otvet!=self.vernotvet) and (self.tri_two==0):
-                arcade.play_sound('music/Детектив 3 4.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 4.wav'))
                 self.tri_two=1
                 self.state == 7
         elif self.text=="Подбери маску 1":
             if (self.userChoiceCards==0) and (self.odin==0):
-                arcade.play_sound('music/Подбери маску 1 0.wav')
+                arcade.play_sound(arcade.load_sound('music/Подбери маску 1 0.wav'))
                 self.odin=1
                 self.state == 4
+                self.tri_one=1
             elif (self.userChoiceCards==1) and (self.odin==0):
-                arcade.play_sound('music/Подбери маску 1 1.wav')
+                arcade.play_sound(arcade.load_sound('music/Подбери маску 1 1.wav'))
                 self.odin=1
                 self.state == 4
+                self.tri_one=1
             elif (self.otvet==self.vernotvet) and (self.tri_one==0):
-                arcade.play_sound('music/Детектив 3 3.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 3.wav'))
                 self.tri_one=1
                 self.state == 4
             elif (self.otvet!=self.vernotvet) and (self.tri_two==0):
-                arcade.play_sound('music/Детектив 3 4.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 4.wav'))
                 self.tri_two=1
                 self.state == 4
         elif self.text=="Подбери маску 2":
             if (self.userChoiceCards==0) and (self.dva==0):
-                arcade.play_sound('music/Подбери маску 2 0.wav')
+                arcade.play_sound(arcade.load_sound('music/Подбери маску 2 0.wav'))
                 self.dva=1
                 self.state == 8
+                self.tri_one=1
             elif (self.userChoiceCards==1) and (self.dva==0):
-                arcade.play_sound('music/Подбери маску 2 1.wav')
+                arcade.play_sound(arcade.load_sound('music/Подбери маску 2 1.wav'))
                 self.dva=1
                 self.state == 8
+                self.tri_one=1
             elif (self.otvet==self.vernotvet) and (self.tri_one==0):
-                arcade.play_sound('music/Детектив 3 3.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 3.wav'))
                 self.tri_one=1
                 self.state == 8
             elif (self.otvet!=self.vernotvet) and (self.tri_two==0):
-                arcade.play_sound('music/Детектив 3 4.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 4.wav'))
                 self.tri_two=1
                 self.state == 8
         elif self.text=="Подбери маску 3":
             if (self.userChoiceCards==0) and (self.tri==0):
-                arcade.play_sound('music/Подбери маску 3 0.wav')
+                arcade.play_sound(arcade.load_sound('music/Подбери маску 3 0.wav'))
                 self.tri=1
                 self.state == 9
+                self.tri_one=1
             elif (self.userChoiceCards==1) and (self.tri==0):
-                arcade.play_sound('music/Подбери маску 3 1.wav')
+                arcade.play_sound(arcade.load_sound('music/Подбери маску 3 1.wav'))
                 self.tri=1
                 self.state == 9
+                self.tri_one=1
             elif (self.otvet==self.vernotvet) and (self.tri_one==0):
-                arcade.play_sound('music/Детектив 3 3.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 3.wav'))
                 self.tri_one=1
                 self.state == 9
             elif (self.otvet!=self.vernotvet) and (self.tri_two==0):
-                arcade.play_sound('music/Детектив 3 4.wav')
+                arcade.play_sound(arcade.load_sound('music/Детектив 3 4.wav'))
                 self.tri_two=1
                 self.state == 9
                 
@@ -1240,13 +1406,13 @@ class TApp(arcade.Window):
         #print(self.userChoiceCards)
 
         if self.userChoiceCards==0:
-            text = "Найти девочку, которая  потеряла конфету"
+            text = "Найди девочку, которая  потеряла конфету"
             text2 = "Какое у неё настроение?"
             files1 = os.listdir(self.detectivePath1)
             if self.dva==0:
                 self.StateSound()
         elif self.userChoiceCards == 1:
-            text = "Найти мальчика, который потерял конфету"
+            text = "Найди мальчика, который потерял конфету"
             text2 = "Какое у него настроение?"
             files1 = os.listdir(self.detectivePath2)
             if self.dva==0:
@@ -1331,7 +1497,36 @@ class TApp(arcade.Window):
 
         #-------------
 
+        # Стрелка
+        self.Strelka1.center_x =self.Strelka1.width // 3
+        self.Strelka1.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka1.draw()
+        
+        # Назад
+        self.MenuFirst2 = 9
+        self.MenuLasti = 1
 
+        mx = self.mouseX
+        my = self.mouseY
+        width = 400
+        height=15
+
+        for i in range(0,self.MenuLasti):
+            text = "Назад"
+            text_size = 35
+            x = self.Strelka1.width//9
+            y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+                color = self.menucolorselected
+                if self.isMouseDown:
+                    self.MenuItemSelected = 3
+            else:
+                color = self.menucolor
+            arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
+        
+
+        self.MenuItemSelected = 6
+        
         # Стрелка
         self.Strelka.center_x = self.SCREEN_WIDTH // 1.3 + 35
         self.Strelka.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
@@ -1346,7 +1541,6 @@ class TApp(arcade.Window):
         my = self.mouseY
         width = 400
         height=15
-        self.MenuItemSelected = 6
 
         for i in range(0,self.MenuLasti):
             text = self.Menu[self.MenuFirst2+i]
@@ -1377,8 +1571,25 @@ class TApp(arcade.Window):
             if self.isMouseDown:
                 self.MenuItemSelected = 98
 
+        # Рисуем мегафон
+        self.aboutLogo4.center_x = self.SCREEN_WIDTH - 0.5*self.aboutLogo4.width
+        self.aboutLogo4.center_y = self.SCREEN_HEIGHT -(1.2*self.aboutLogo4.height)
+        self.aboutLogo4.draw()
+        # Определяем попадание курсора на крестик
+        bottom =self.mouseY > self.aboutLogo4.center_y - self.aboutLogo4.height // 2
+        top = self.mouseY < self.aboutLogo4.center_y + self.aboutLogo4.height // 2
+
+        left = self.mouseX > self.aboutLogo4.center_x - self.aboutLogo4.width // 2
+        right = self.mouseX < self.aboutLogo4.center_x + self.aboutLogo4.width // 2
+
+        if (bottom and top) and (left and right):
+            arcade.draw_rectangle_outline(self.aboutLogo4.center_x,self.aboutLogo4.center_y,self.aboutLogo4.width,self.aboutLogo4.height,color=arcade.color.FELDSPAR)
+            if (self.isMouseDown) and (self.tri_one==0):
+                self.dva=0
+                self.StateSound()
+
     def drawState7(self):
-        self.vernotvet=4
+        self.vernotvet=5
         #print("ghjghj", self.userBadAnswers)
         otvet=-1
         # Игра Детектив 3
@@ -1397,26 +1608,31 @@ class TApp(arcade.Window):
         #print(self.userChoiceCards)
 
         if self.userChoiceCards==0:
-            text = "Найти девочку, которая увидела слона"
-            text2 = "Какое у неё настроение?"
+            text = "Мама нашла спрятанные Катей фантики от конфет"
+            text2 = "за диваном. Найди где Катя."
+            text3 = "Как себя чувствует Катя?"
             files1 = os.listdir(self.detectivePath1)
             if self.tri==0:
                 self.StateSound()
         elif self.userChoiceCards == 1:
-            text = "Найти мальчика, который увидел слона"
-            text2 = "Какое у него настроение?"
+            text = "Мама нашла спрятанные Вовой фантики от конфет"
+            text2 = "за диваном. Найди где Вова."
+            text3 = "Как себя чувствует Вова?"
             files1 = os.listdir(self.detectivePath2)
             if self.tri==0:
                 self.StateSound()
         color = self.subtitlecolor
         text_size = 33
-        x = self.SCREEN_WIDTH // 4.2
-        x2 = self.SCREEN_WIDTH // 3.5
-        y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 6
-        y2 = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 4
+        x = self.SCREEN_WIDTH // 7
+        x2 = self.SCREEN_WIDTH // 3.8
+        x3 = self.SCREEN_WIDTH // 3.5
+        y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 7
+        y2 = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 5.25
+        y3 = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 4
         arcade.draw_text(text,x, y,color, text_size, anchor_y = "center",font_name = self.font_title)
         arcade.draw_text(text2,x2, y2,color, text_size, anchor_y = "center",font_name = self.font_title)
-        
+        arcade.draw_text(text3,x3, y3,color, text_size, anchor_y = "center",font_name = self.font_title)
+
         #------------------------------
 
         """ Загрузка картинок """
@@ -1440,6 +1656,33 @@ class TApp(arcade.Window):
         #-------------
 
         # Стрелка
+        self.Strelka1.center_x =self.Strelka1.width // 3
+        self.Strelka1.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka1.draw()
+        
+        # Назад
+        self.MenuFirst2 = 9
+        self.MenuLasti = 1
+
+        mx = self.mouseX
+        my = self.mouseY
+        width = 400
+        height=15
+
+        for i in range(0,self.MenuLasti):
+            text = "Назад"
+            text_size = 35
+            x = self.Strelka1.width//9
+            y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+                color = self.menucolorselected
+                self.MenuItemSelected = 6
+            else:
+                color = self.menucolor
+            arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
+        
+
+        # Стрелка
         self.Strelka.center_x = self.SCREEN_WIDTH // 1.3 + 35
         self.Strelka.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
         self.Strelka.draw()
@@ -1453,7 +1696,6 @@ class TApp(arcade.Window):
         my = self.mouseY
         width = 400
         height=15
-        self.MenuItemSelected = 7
 
         for i in range(0,self.MenuLasti):
             text = self.Menu[self.MenuFirst2+i]
@@ -1461,9 +1703,11 @@ class TApp(arcade.Window):
             x = self.SCREEN_WIDTH // 1.3
             y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
             if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
-                color = self.menucolorselected
-                self.sl=2
-                self.MenuItemSelected = 97
+                if self.isMouseDown:
+                    color = self.menucolorselected
+                    self.sl=2
+                    self.MenuItemSelected = 97
+                    #sound.pause()
             else:
                 color = self.menucolor
             arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
@@ -1531,9 +1775,26 @@ class TApp(arcade.Window):
             if self.isMouseDown:
                 self.MenuItemSelected = 98
 
+        # Рисуем мегафон
+        self.aboutLogo4.center_x = self.SCREEN_WIDTH - 0.5*self.aboutLogo4.width
+        self.aboutLogo4.center_y = self.SCREEN_HEIGHT -(1.2*self.aboutLogo4.height)
+        self.aboutLogo4.draw()
+        # Определяем попадание курсора на крестик
+        bottom =self.mouseY > self.aboutLogo4.center_y - self.aboutLogo4.height // 2
+        top = self.mouseY < self.aboutLogo4.center_y + self.aboutLogo4.height // 2
+
+        left = self.mouseX > self.aboutLogo4.center_x - self.aboutLogo4.width // 2
+        right = self.mouseX < self.aboutLogo4.center_x + self.aboutLogo4.width // 2
+
+        if (bottom and top) and (left and right):
+            arcade.draw_rectangle_outline(self.aboutLogo4.center_x,self.aboutLogo4.center_y,self.aboutLogo4.width,self.aboutLogo4.height,color=arcade.color.FELDSPAR)
+            if (self.isMouseDown) and (self.tri_one==0):
+                self.tri=0
+                self.StateSound()
+
 
     def drawState4(self):
-        self.vernotvet=1
+        self.vernotvet=0
         # Игра Подбери маску
         text = "Игра Подбери маску"
         self.text = "Подбери маску 1"
@@ -1548,47 +1809,36 @@ class TApp(arcade.Window):
         self.imgAvatars.sprite_list[self.userAvatar].draw()
 
 
-        '''for i in files1:
-            if self.userChoiceCards==0:
-                self.imgDetective2 = arcade.Sprite(self.detectivePath1+i, 1)
-            elif self.userChoiceCards == 1:
-                self.imgDetective2 = arcade.Sprite(self.detectivePath2+i, 1)
-            else:
-                self.imgDetective2 = arcade.Sprite(self.detectivePath1+i, 1)
-            self.imgDetective2.width = 150
-            self.imgDetective2.height = 200
-            self.imgDetective2.center_x = 0
-            self.imgDetective2.center_y = 0
-            self.imgDetectives2.append(self.imgDetective2)'''
         if self.userChoiceCards==0:
-            self.aboutLogo2 = arcade.Sprite(self.detectivePath4 + "1_1.png",0.8)
-            text = "Саша очень любит играть на плошадке перед домом,"
-            text2 = "но сегодня мама её не пустила. Найди Сашу."
-            text3 = "Какое у неё настроение?"
+            if self.e==0:
+                self.aboutLogo2 = arcade.Sprite(self.detectivePath4 + "1_1.png",0.19)
+            else:
+                self.aboutLogo2 = arcade.Sprite(self.detectivePath7 + str(int(self.otvet)+1)+".png",0.19)
+            text = "Сегодня Вика подружилась с девочкой. Какое у неё"
+            text2 = "настроение? Найди такую маску."
             #files1 = os.listdir(self.detectivePath4)
             if self.odin==0:
                 self.StateSound()
         elif self.userChoiceCards == 1:
-            self.aboutLogo2 = arcade.Sprite(self.detectivePath4 + "1.png",0.8)
-            text = "Саша очень любит играть на плошадке перед домом,"
-            text2 = "но сегодня мама его не пустила. Найди Сашу."
-            text3 = "Какое у него настроение?"
+            if self.e==0:
+                self.aboutLogo2 = arcade.Sprite(self.detectivePath4 + "1.png",0.19)
+            else:
+                self.aboutLogo2 = arcade.Sprite(self.detectivePath7 + str(self.otvet+1)+"_1.png",0.19)
+            text = "Сегодня Витя подружился с мальчиком. Какое у него"
+            text2 = "настроение? Найди такую маску."
             if self.odin==0:
                 self.StateSound()
         color = self.subtitlecolor
         text_size = 33
         x = self.SCREEN_WIDTH // 7
-        x2 = self.SCREEN_WIDTH // 5.5
-        x3 = self.SCREEN_WIDTH // 3.5
-        y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 7
-        y2 = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 5.25
-        y3 = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 4
+        x2 = self.SCREEN_WIDTH // 4.5
+        y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 5
+        y2 = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 3.75
         arcade.draw_text(text,x, y,color, text_size, anchor_y = "center",font_name = self.font_title)
         arcade.draw_text(text2,x2, y2,color, text_size, anchor_y = "center",font_name = self.font_title)
-        arcade.draw_text(text3,x3, y3,color, text_size, anchor_y = "center",font_name = self.font_title)
-
+        
         self.aboutLogo2.center_x = self.SCREEN_WIDTH // 2
-        self.aboutLogo2.center_y = y - self.aboutLogo2.height // 1.15
+        self.aboutLogo2.center_y = y - self.aboutLogo2.height // 1.1
         self.aboutLogo2.draw()
 
 
@@ -1636,13 +1886,43 @@ class TApp(arcade.Window):
                     self.otvet=i
                     if (self.otvet==self.vernotvet) and (self.tri_one==0):
                         self.StateSound()
+                        self.e=1
                     elif (self.otvet!=self.vernotvet) and (self.tri_two==0):
                         self.StateSound()
+                        self.e=1
                     #x=self.mouseX
                     #y=self.mouseY
                     #self.imgMaskes.sprite_list[i].draw()
                     #self.userAvatar = i
                     #print('всё ок')
+        
+
+        # Стрелка
+        self.Strelka1.center_x =self.Strelka1.width // 3
+        self.Strelka1.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka1.draw()
+        
+        # Назад
+        self.MenuFirst2 = 9
+        self.MenuLasti = 1
+
+        mx = self.mouseX
+        my = self.mouseY
+        width = 400
+        height=15
+        self.MenuItemSelected_2 = -1
+
+        for i in range(0,self.MenuLasti):
+            text = "Назад"
+            text_size = 35
+            x = self.Strelka1.width//9
+            y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+                color = self.menucolorselected
+                self.MenuItemSelected = 2
+            else:
+                color = self.menucolor
+            arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
         
 
         # Стрелка
@@ -1659,7 +1939,6 @@ class TApp(arcade.Window):
         my = self.mouseY
         width = 400
         height=15
-        self.MenuItemSelected = 4
 
         for i in range(0,self.MenuLasti):
             text = self.Menu[self.MenuFirst2+i]
@@ -1667,9 +1946,11 @@ class TApp(arcade.Window):
             x = self.SCREEN_WIDTH // 1.3
             y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
             if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
-                color = self.menucolorselected
-                self.sl=8
-                self.MenuItemSelected = 97
+                if self.isMouseDown:
+                    color = self.menucolorselected
+                    self.sl=8
+                    self.MenuItemSelected = 97
+                    self.e=0
             else:
                 color = self.menucolor
             arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
@@ -1690,9 +1971,28 @@ class TApp(arcade.Window):
             if self.isMouseDown:
                 self.MenuItemSelected = 98
 
+        # Рисуем мегафон
+        self.aboutLogo4.center_x = self.SCREEN_WIDTH - 0.5*self.aboutLogo4.width
+        self.aboutLogo4.center_y = self.SCREEN_HEIGHT -(1.2*self.aboutLogo4.height)
+        self.aboutLogo4.draw()
+        # Определяем попадание курсора на крестик
+        bottom =self.mouseY > self.aboutLogo4.center_y - self.aboutLogo4.height // 2
+        top = self.mouseY < self.aboutLogo4.center_y + self.aboutLogo4.height // 2
+
+        left = self.mouseX > self.aboutLogo4.center_x - self.aboutLogo4.width // 2
+        right = self.mouseX < self.aboutLogo4.center_x + self.aboutLogo4.width // 2
+
+        if (bottom and top) and (left and right):
+            arcade.draw_rectangle_outline(self.aboutLogo4.center_x,self.aboutLogo4.center_y,self.aboutLogo4.width,self.aboutLogo4.height,color=arcade.color.FELDSPAR)
+            if (self.isMouseDown) and (self.tri_one==0):
+                self.odin=0
+                self.StateSound()
+
+
     def drawState8(self):
-        self.vernotvet=2
+        self.vernotvet=1
         # Игра Подбери маску 2
+        print(self.otvet)
         text = "Игра Подбери маску"
         self.text = "Подбери маску 2"
         color = self.titlecolor
@@ -1707,34 +2007,41 @@ class TApp(arcade.Window):
 
         
         if self.userChoiceCards==0:
-            self.aboutLogo3 = arcade.Sprite(self.detectivePath4 + "2_1.png",0.8)
-            text = "У Иры взяли игрушку без спроса и играют с ней."
-            text2 = "Найди где Ира."
-            text3 = "Как себя чувствует Ира?"
+            if self.e==0:
+                self.aboutLogo2 = arcade.Sprite(self.detectivePath4 + "1_1.png",0.19)
+            else:
+                self.aboutLogo2 = arcade.Sprite(self.detectivePath7 + str(self.otvet+1)+".png",0.19)
+            text = "Ребята из детского сада ходили в Цирк, вот только"
+            text2 = "Света заболела и не смогла пойти. Какое настроение"
+            text3 = "у Светы? Найди такую маску."
+            x2 = self.SCREEN_WIDTH // 7.2
             if self.dva==0:
                 self.StateSound()
         elif self.userChoiceCards == 1:
-            self.aboutLogo3 = arcade.Sprite(self.detectivePath4 + "2.png",0.8)
-            text = "У Вовы взяли игрушку без спроса и играют с ней."
-            text2 = "Найди где Вова."
-            text3 = "Как себя чувствует Вова?"
+            if self.e==0:
+                self.aboutLogo2 = arcade.Sprite(self.detectivePath4 + "1.png",0.19)
+            else:
+                self.aboutLogo2 = arcade.Sprite(self.detectivePath7 + str(self.otvet+1)+"_1.png",0.19)
+            text = "Ребята из детского сада ходили в Цирк, вот только"
+            text2 = "Коля заболел и не смог пойти. Какое настроение"
+            text3 = "у Коли? Найди такую маску."
+            x2 = self.SCREEN_WIDTH // 6.5
             if self.dva==0:
                 self.StateSound()
         color = self.subtitlecolor
         text_size = 33
         x = self.SCREEN_WIDTH // 7
-        x2 = self.SCREEN_WIDTH // 3
         x3 = self.SCREEN_WIDTH // 3.1
         y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 7
-        y2 = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 5.25
+        y2 = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 5
         y3 = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 4
         arcade.draw_text(text,x, y,color, text_size, anchor_y = "center",font_name = self.font_title)
         arcade.draw_text(text2,x2, y2,color, text_size, anchor_y = "center",font_name = self.font_title)
         arcade.draw_text(text3,x3, y3,color, text_size, anchor_y = "center",font_name = self.font_title)
 
-        self.aboutLogo3.center_x = self.SCREEN_WIDTH // 2
-        self.aboutLogo3.center_y = y - self.aboutLogo2.height // 1.15
-        self.aboutLogo3.draw()
+        self.aboutLogo2.center_x = self.SCREEN_WIDTH // 2
+        self.aboutLogo2.center_y = y - self.aboutLogo2.height // 1.1
+        self.aboutLogo2.draw()
 
 
         files = os.listdir(self.detectivePath5)
@@ -1742,7 +2049,10 @@ class TApp(arcade.Window):
         self.imgMaskes = arcade.SpriteList()
 
         for i in files:
-            self.imgMask = arcade.Sprite(self.detectivePath5+i, 1)
+            if (i=="3.png") and (self.userChoiceCards == 1):
+                self.imgMask = arcade.Sprite(self.detectivePath+"3_1.png", 1)
+            else:
+                self.imgMask = arcade.Sprite(self.detectivePath5+i, 1)
             self.imgMask.width = 100
             self.imgMask.height = 100
             self.imgMask.center_x = 0
@@ -1781,9 +2091,39 @@ class TApp(arcade.Window):
                     self.otvet=i
                     if (self.otvet==self.vernotvet) and (self.tri_one==0):
                         self.StateSound()
+                        self.e=1
                     elif (self.otvet!=self.vernotvet) and (self.tri_two==0):
                         self.StateSound()
+                        self.e=1
+                    print(self.otvet)
 
+
+        # Стрелка
+        self.Strelka1.center_x =self.Strelka1.width // 3
+        self.Strelka1.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka1.draw()
+        
+        # Назад
+        self.MenuFirst2 = 9
+        self.MenuLasti = 1
+
+        mx = self.mouseX
+        my = self.mouseY
+        width = 400
+        height=15
+
+        for i in range(0,self.MenuLasti):
+            text = "Назад"
+            text_size = 35
+            x = self.Strelka1.width//9
+            y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+                color = self.menucolorselected
+                self.MenuItemSelected = 4
+            else:
+                color = self.menucolor
+            arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
+        
         
         # Стрелка
         self.Strelka.center_x = self.SCREEN_WIDTH // 1.3 + 35
@@ -1799,17 +2139,18 @@ class TApp(arcade.Window):
         my = self.mouseY
         width = 400
         height=15
-        self.MenuItemSelected = 8
 
         for i in range(0,self.MenuLasti):
             text = self.Menu[self.MenuFirst2+i]
             text_size = 35
             x = self.SCREEN_WIDTH // 1.3
             y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
-            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
-                color = self.menucolorselected
-                self.sl=9
-                self.MenuItemSelected = 97
+            if my>y-height and my<y+height and mx>x-width//4 and mx<x+width//2:
+                if self.isMouseDown:
+                    color = self.menucolorselected
+                    self.sl=9
+                    #self.MenuItemSelected = 97
+                    self.e=0
             else:
                 color = self.menucolor
             arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
@@ -1830,8 +2171,26 @@ class TApp(arcade.Window):
             if self.isMouseDown:
                 self.MenuItemSelected = 98
 
+        '''# Рисуем мегафон
+        self.aboutLogo4.center_x = self.SCREEN_WIDTH - 0.5*self.aboutLogo4.width
+        self.aboutLogo4.center_y = self.SCREEN_HEIGHT -(1.2*self.aboutLogo4.height)
+        self.aboutLogo4.draw()
+        # Определяем попадание курсора на крестик
+        bottom =self.mouseY > self.aboutLogo4.center_y - self.aboutLogo4.height // 2
+        top = self.mouseY < self.aboutLogo4.center_y + self.aboutLogo4.height // 2
+
+        left = self.mouseX > self.aboutLogo4.center_x - self.aboutLogo4.width // 2
+        right = self.mouseX < self.aboutLogo4.center_x + self.aboutLogo4.width // 2
+
+        if (bottom and top) and (left and right):
+            arcade.draw_rectangle_outline(self.aboutLogo4.center_x,self.aboutLogo4.center_y,self.aboutLogo4.width,self.aboutLogo4.height,color=arcade.color.FELDSPAR)
+            if (self.isMouseDown) and (self.tri_one==0):
+                self.dva=0
+                self.StateSound()'''
+
+
     def drawState9(self):
-        self.vernotvet=4
+        self.vernotvet=0
         # Игра Подбери маску 3
         text = "Игра Подбери маску"
         self.text = "Подбери маску 3"
@@ -1847,23 +2206,30 @@ class TApp(arcade.Window):
 
         
         if self.userChoiceCards==0:
-            self.aboutLogo3 = arcade.Sprite(self.detectivePath4 + "3_1.png",0.8)
-            text = "Зоя приехала с родителями в певый раз на море. "
-            text2 = "Найди где Зоя."
-            text3 = "Как себя чувствует Зоя?"
+            if self.e==0:
+                self.aboutLogo2 = arcade.Sprite(self.detectivePath4 + "1_1.png",0.19)
+            else:
+                print(self.otvet)
+                self.aboutLogo2 = arcade.Sprite(self.detectivePath7 + str(self.otvet+1)+".png",0.19)
+            text = "Наташа очень любит солнечную погоду. Сегодня на "
+            text2 = "улице светит солнце. Какое у неё настроение?"
+            text3 = "Найди такую маску."
             if self.tri==0:
                 self.StateSound()
         elif self.userChoiceCards == 1:
-            self.aboutLogo3 = arcade.Sprite(self.detectivePath4 + "3.png",0.8)
-            text = "Сёма приехал с родителями в первый раз на море. "
-            text2 = "Найди где Сёма."
-            text3 = "Как себя чувствует Сёма?"
+            if self.e==0:
+                self.aboutLogo2 = arcade.Sprite(self.detectivePath4 + "1.png",0.19)
+            else:
+                self.aboutLogo2 = arcade.Sprite(self.detectivePath7 + str(self.otvet+1)+"_1.png",0.19)
+            text = "Миша очень любит солнечную погоду. Сегодня на "
+            text2 = "улице светит солнце. Какое у него настроение?"
+            text3 = "Найди такую маску."
             if self.tri==0:
                 self.StateSound()
         color = self.subtitlecolor
         text_size = 33
         x = self.SCREEN_WIDTH // 7
-        x2 = self.SCREEN_WIDTH // 2.9
+        x2 = self.SCREEN_WIDTH // 6.9
         x3 = self.SCREEN_WIDTH // 3.1
         y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 7
         y2 = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 5.25
@@ -1872,9 +2238,9 @@ class TApp(arcade.Window):
         arcade.draw_text(text2,x2, y2,color, text_size, anchor_y = "center",font_name = self.font_title)
         arcade.draw_text(text3,x3, y3,color, text_size, anchor_y = "center",font_name = self.font_title)
 
-        self.aboutLogo3.center_x = self.SCREEN_WIDTH // 2
-        self.aboutLogo3.center_y = y - self.aboutLogo2.height // 1.15
-        self.aboutLogo3.draw()
+        self.aboutLogo2.center_x = self.SCREEN_WIDTH // 2
+        self.aboutLogo2.center_y = y - self.aboutLogo2.height // 1.1
+        self.aboutLogo2.draw()
 
 
         files = os.listdir(self.detectivePath5)
@@ -1882,7 +2248,10 @@ class TApp(arcade.Window):
         self.imgMaskes = arcade.SpriteList()
 
         for i in files:
-            self.imgMask = arcade.Sprite(self.detectivePath5+i, 1)
+            if (i=="3.png") and (self.userChoiceCards == 1):
+                self.imgMask = arcade.Sprite(self.detectivePath+"3_1.png", 1)
+            else:
+                self.imgMask = arcade.Sprite(self.detectivePath5+i, 1)
             self.imgMask.width = 100
             self.imgMask.height = 100
             self.imgMask.center_x = 0
@@ -1921,17 +2290,18 @@ class TApp(arcade.Window):
                     self.otvet=i
                     if (self.otvet==self.vernotvet) and (self.tri_one==0):
                         self.StateSound()
+                        self.e=1
                     elif (self.otvet!=self.vernotvet) and (self.tri_two==0):
                         self.StateSound()
+                        self.e=1
 
         
         # Стрелка
-        self.Strelka.center_x = self.SCREEN_WIDTH // 1.2 + 35
-        self.Strelka.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
-        self.Strelka.draw()
-
+        self.Strelka1.center_x =self.Strelka1.width // 3
+        self.Strelka1.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka1.draw()
         
-        # Дальше
+        # Назад
         self.MenuFirst2 = 9
         self.MenuLasti = 1
 
@@ -1939,20 +2309,21 @@ class TApp(arcade.Window):
         my = self.mouseY
         width = 400
         height=15
-        self.MenuItemSelected = 9
+        self.MenuItemSelected_2 = -1
 
         for i in range(0,self.MenuLasti):
-            text = self.Menu[self.MenuFirst2+i]
+            text = "Назад"
             text_size = 35
-            x = self.SCREEN_WIDTH // 1.2
+            x = self.Strelka1.width//9
             y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
-            if my>y-height and my<y+height and mx>x-width//4 and mx<x+width//2:
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
                 color = self.menucolorselected
-                self.sl=2
-                self.MenuItemSelected = 97
+                self.MenuItemSelected = 8
             else:
                 color = self.menucolor
             arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
+        
+
 
         # Рисуем крестик
         self.aboutLogo1.center_x = self.SCREEN_WIDTH - 0.5*self.aboutLogo1.width
@@ -1970,167 +2341,31 @@ class TApp(arcade.Window):
             if self.isMouseDown:
                 self.MenuItemSelected = 98
 
-    '''def drawState5(self):
-        self.clic = 0
-        lop=0
-        # Игра Пятнашки 1
-        text = "Игра Пятнашки"
-        color = self.titlecolor
-        text_size = 38
-        x = self.SCREEN_WIDTH // 2.7
-        y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 12
-        arcade.draw_text(text,x, y,color, text_size, anchor_y = "center",font_name = "Comic Sans MS")
+        # Рисуем мегафон
+        self.aboutLogo4.center_x = self.SCREEN_WIDTH - 0.5*self.aboutLogo4.width
+        self.aboutLogo4.center_y = self.SCREEN_HEIGHT -(1.2*self.aboutLogo4.height)
+        self.aboutLogo4.draw()
+        # Определяем попадание курсора на крестик
+        bottom =self.mouseY > self.aboutLogo4.center_y - self.aboutLogo4.height // 2
+        top = self.mouseY < self.aboutLogo4.center_y + self.aboutLogo4.height // 2
 
-        self.imgAvatars.sprite_list[self.userAvatar].center_x = self.imgAvatars.sprite_list[self.userAvatar].width
-        self.imgAvatars.sprite_list[self.userAvatar].center_y = self.SCREEN_HEIGHT - self.imgAvatars.sprite_list[self.userAvatar].height
-        self.imgAvatars.sprite_list[self.userAvatar].draw()
+        left = self.mouseX > self.aboutLogo4.center_x - self.aboutLogo4.width // 2
+        right = self.mouseX < self.aboutLogo4.center_x + self.aboutLogo4.width // 2
 
-
-        #Создаем сами картинки
-
-        files = os.listdir(self.detectivePath1)
-
-        self.imgPytns_1 = arcade.SpriteList()
-
-        for j in range(0,4):
-            for i in files:
-                k=str(self.RAND_1[j]+1)+'.jpg'
-                if str(i)==k:
-                    self.imgPytn = arcade.Sprite(self.detectivePath1+i, 1)
-                    self.imgPytn.width = 150
-                    self.imgPytn.height = 250
-                    self.imgPytn.center_x = 0
-                    self.imgPytn.center_y = 0
-                    self.imgPytns_1.append(self.imgPytn)
-
-        #self.imgAvatars.draw()
-        # Вывод конкретного спрайта
-        w=self.imgPytns_1.sprite_list[1].width
-        h=self.imgPytns_1.sprite_list[1].height
-        counter = 2
-        s = 20
-        x = self.SCREEN_WIDTH // 2 - (counter * w) // 3
-        y = self.SCREEN_HEIGHT // 3
-        for i in range(0,len(self.imgPytns_1.sprite_list)):
-            self.imgPytns_1.sprite_list[i].center_x = x
-            x += w + s
-            self.imgPytns_1.sprite_list[i].center_y = y
-            counter -=1
-            if counter <=0:
-                counter = 2
-                x = self.SCREEN_WIDTH // 2 - (counter * w) // 3
-                y += h + s
-        
-            #self.imgPytns_1.sprite_list[i].draw()
-        #Создаем "рубашки" карточек
-        files = os.listdir(self.detectivePath6)
-
-        self.imgPytns = arcade.SpriteList()
-
-        for i in files:
-            self.imgPytn = arcade.Sprite(self.detectivePath6+i, 1)
-            self.imgPytn.width = 150
-            self.imgPytn.height = 250
-            self.imgPytn.center_x = 0
-            self.imgPytn.center_y = 0
-            self.imgPytns.append(self.imgPytn)
-
-        #self.imgAvatars.draw()
-        # Вывод конкретного спрайта
-        w=self.imgPytns.sprite_list[1].width
-        h=self.imgPytns.sprite_list[1].height
-        counter = 2
-        s = 20
-        x = self.SCREEN_WIDTH // 2 - (counter * w) // 3
-        y = self.SCREEN_HEIGHT // 3
-        for i in range(0,len(self.imgPytns.sprite_list)):
-            self.imgPytns.sprite_list[i].center_x = x
-            x += w + s
-            self.imgPytns.sprite_list[i].center_y = y
-            counter -=1
-            if counter <=0:
-                counter = 2
-                x = self.SCREEN_WIDTH // 2 - (counter * w) // 3
-                y += h + s
-            ''''''if self.schet_card == 0:
-                self.imgPytns.sprite_list[i].draw()
-            elif self.schet_card == 1:''''''
-            if (self.schet_card < 2):
-                for j in range(0,len(self.imgPytns.sprite_list)):
-                    #print(j)
-                    if self.coin[j] == 1:
-                        lop = k
-                        self.imgPytns_1.sprite_list[j].draw()
-                        #arcade.pause(1)
-                    elif self.coin[j] == -1:
-                        pass
-                    else:
-                        self.imgPytns.sprite_list[j].draw()
-            elif (self.schet_card > 2):
-                self.imgPytns.sprite_list[i].draw()
-                self.schet_card = 0
-                #arcade.play_sound(self.music)
-                self.coin=[0,0,0,0]
-            elif self.schet_card == 2:
-                if k == lop:
-                    print(k, lop)
-                    #lop="ghj"
-                    self.coin[i]=-1
-                    print(self.coin)
-                else:
-                    lop = ""
-                    self.coin=[0,0,0,0]
-                
+        if (bottom and top) and (left and right):
+            arcade.draw_rectangle_outline(self.aboutLogo4.center_x,self.aboutLogo4.center_y,self.aboutLogo4.width,self.aboutLogo4.height,color=arcade.color.FELDSPAR)
+            if (self.isMouseDown) and (self.tri_one==0):
+                self.tri=0
+                self.StateSound()
 
 
-            # Определяем попадание курсора на аватар
-            bottom =self.mouseY > self.imgPytns.sprite_list[i].center_y - self.imgPytns.sprite_list[i].height // 2
-            top = self.mouseY < self.imgPytns.sprite_list[i].center_y + self.imgPytns.sprite_list[i].height // 2
-
-            left = self.mouseX > self.imgPytns.sprite_list[i].center_x - self.imgPytns.sprite_list[i].width // 2
-            right = self.mouseX < self.imgPytns.sprite_list[i].center_x + self.imgPytns.sprite_list[i].width // 2
-
-            if (bottom and top) and (left and right):
-                arcade.draw_rectangle_outline(self.imgPytns.sprite_list[i].center_x,self.imgPytns.sprite_list[i].center_y,self.imgPytns.sprite_list[i].width,self.imgPytns.sprite_list[i].height,color=arcade.color.FELDSPAR)
-                if self.isMouseDown:
-                    #print(self.RAND_1[i]+1)
-                    #self.userAvatar = i
-                    k=str(self.RAND_1[i]+1)+'.jpg'
-                    print('номер картрочки ',k)
-                    print(i)
-                    #print(k)
-                    files1 = os.listdir(self.detectivePath1)
-                    for p in files1:
-                        print(str(p))
-                        if str(p)==k:
-                            #self.imgPytns.sprite_list[i]=arcade.Sprite(self.detectivePath6+p, 1)
-                            #self.imgPytns_1.sprite_list[i].draw()
-                            self.coin[i]=1
-                            self.schet_card=self.schet_card+1
-                            print("ghj", self.coin)
-                            print(self.schet_card)
-                        else:
-                            #self.schet_card = 0
-                            self.coin[i]=1
-                    ''''''for c in range(0, len(self.coin)-1):
-                        for s in range(1, len(self.coin)):
-                            print('ghjgjg', c, 'fggvnb' , s)
-                            if self.RAND_1[c]==self.RAND_1[s]:
-                                
-                            
-                    self.coin[i]=1
-                    self.schet_card=self.schet_card+1''''''
-                    
-
-                            
-                    #print(self.imgPytns.sprite_list[i])
-        # Стрелка
-        self.Strelka.center_x = self.SCREEN_WIDTH // 1.3 + 35
+                # Стрелка
+        self.Strelka.center_x = self.SCREEN_WIDTH // 1.2 + 35
         self.Strelka.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
         self.Strelka.draw()
 
         
-            # Дальше
+        # Дальше
         self.MenuFirst2 = 9
         self.MenuLasti = 1
 
@@ -2138,37 +2373,26 @@ class TApp(arcade.Window):
         my = self.mouseY
         width = 400
         height=15
-        self.MenuItemSelected = 5
 
         for i in range(0,self.MenuLasti):
             text = self.Menu[self.MenuFirst2+i]
             text_size = 35
-            x = self.SCREEN_WIDTH // 1.3
+            x = self.SCREEN_WIDTH // 1.2
             y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
-            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
-                color = self.menucolorselected
-                self.MenuItemSelected = 2
+            if my>y-height and my<y+height and mx>x-width//4 and mx<x+width//2:
+                if self.isMouseDown:
+                    color = self.menucolorselected
+                    self.sl=2
+                    self.MenuItemSelected = 97
+                    self.e=0
             else:
                 color = self.menucolor
             arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
 
-        # Рисуем крестик
-        self.aboutLogo1.center_x = self.SCREEN_WIDTH - 0.5*self.aboutLogo1.width
-        self.aboutLogo1.center_y = self.SCREEN_HEIGHT -(0.5*self.aboutLogo1.height)
-        self.aboutLogo1.draw()
-        # Определяем попадание курсора на крестик
-        bottom =self.mouseY > self.aboutLogo1.center_y - self.aboutLogo1.height // 2
-        top = self.mouseY < self.aboutLogo1.center_y + self.aboutLogo1.height // 2
 
-        left = self.mouseX > self.aboutLogo1.center_x - self.aboutLogo1.width // 2
-        right = self.mouseX < self.aboutLogo1.center_x + self.aboutLogo1.width // 2
-
-        if (bottom and top) and (left and right):
-            arcade.draw_rectangle_outline(self.aboutLogo1.center_x,self.aboutLogo1.center_y,self.aboutLogo1.width,self.aboutLogo1.height,color=arcade.color.FELDSPAR)
-            if self.isMouseDown:
-                self.MenuItemSelected = 98'''
 
     def drawState5(self):
+        self.MenuItemSelected = 5
         self.clic = 0
         lop=0
         # Игра Пятнашки 1
@@ -2269,31 +2493,6 @@ class TApp(arcade.Window):
             if self.coin[i] == -1:
                 #arcade.pause(1)
                 pass
-            '''if (self.schet_card < 2):
-                for j in range(0,len(self.imgPytns.sprite_list)):
-                    #print(j)
-                    if self.coin[j] == 1:
-                        lop = k
-                        self.imgPytns_1.sprite_list[j].draw()
-                        #arcade.pause(1)
-                    elif self.coin[j] == -1:
-                        pass
-                    else:
-                        self.imgPytns.sprite_list[j].draw()
-            elif (self.schet_card > 2):
-                self.imgPytns.sprite_list[i].draw()
-                self.schet_card = 0
-                #arcade.play_sound(self.music)
-                self.coin=[0,0,0,0]
-            elif self.schet_card == 2:
-                if k == lop:
-                    print(k, lop)
-                    #lop="ghj"
-                    self.coin[i]=-1
-                    print(self.coin)
-                else:
-                    lop = ""
-                    self.coin=[0,0,0,0]'''
                 
 
 
@@ -2307,22 +2506,21 @@ class TApp(arcade.Window):
             if (bottom and top) and (left and right):
                 arcade.draw_rectangle_outline(self.imgPytns.sprite_list[i].center_x,self.imgPytns.sprite_list[i].center_y,self.imgPytns.sprite_list[i].width,self.imgPytns.sprite_list[i].height,color=arcade.color.FELDSPAR)
                 if self.isMouseDown:
-                    #print(self.RAND_1[i]+1)
-                    #self.userAvatar = i
-                    k=str(self.RAND_1[i]+1)+'.jpg'
-                    print('номер карточки ',k)
-                    #print(i)
-                    #print(k)
-                    if self.coin[i]==0:
-                        self.coin[i]=1
-                    print(self.coin)
-                    print("нажал",self.schet_card)
-                    if self.schet_card>1:
+                    if (self.schet_card>1) and (self.schet_card<3):
+                        k=str(self.RAND_1[i]+1)+'.jpg'
+                        #print('номер карточки ',k)
+                        #print(i)
+                        #print(k)
+                        if self.coin[i]==0:
+                            self.coin[i]=1
+                        #print(self.coin)
+                        #print("нажал",self.schet_card)
+                        self.imgPytns_1.sprite_list[i].draw()
                         for c in range(0, len(self.coin)-1):
                             for s in range(1, len(self.coin)):
                                 if (self.coin[c]==1) and (self.coin[s]==1) and (self.RAND_1[c]==self.RAND_1[s]) and (c!=s):
                                     self.imgPytns_1.sprite_list[i].draw()
-                                    print(c, self.coin[c], s, self.coin[s], self.RAND_1[c], self.RAND_1[s])
+                                    #print(c, self.coin[c], s, self.coin[s], self.RAND_1[c], self.RAND_1[s])
                                     arcade.pause(0.1)
                                     self.coin[c]=-1
                                     self.coin[s]=-1
@@ -2331,38 +2529,47 @@ class TApp(arcade.Window):
                                 elif (self.coin[c]==1) and (self.coin[s]==1) and (self.RAND_1[c]!=self.RAND_1[s]) and (c!=s):
                                     self.coin[c]=0
                                     self.coin[s]=0
+                                    self.coin[i]=0
                                     self.schet_card=1
-                                print(self.coin)
+                                #print(self.coin)
                         self.schet_card=1
-                                
-
-
-                    '''
-                    files1 = os.listdir(self.detectivePath1)
-                    for p in files1:
-                        print(str(p))
-                        if str(p)==k:
-                            #self.imgPytns.sprite_list[i]=arcade.Sprite(self.detectivePath6+p, 1)
-                            #self.imgPytns_1.sprite_list[i].draw()
-                            self.coin[i]=1
-                            self.schet_card=self.schet_card+1
-                            print("ghj", self.coin)
-                            print(self.schet_card)
-                        ''''''else:
-                            #self.schet_card = 0
-                            self.coin[i]=1'''
-            '''for c in range(0, len(self.coin)-1):
-                        for s in range(1, len(self.coin)):
-                            print('ghjgjg', c, 'fggvnb' , s)
-                            if self.RAND_1[c]==self.RAND_1[s]:
-                                
-                            
-                    self.coin[i]=1
-                    self.schet_card=self.schet_card+1'''
+                    elif self.schet_card>2:
+                        self.schet_card=1
+                        for f in range(0, len(self.coin)):
+                            if self.coin[f] != -1:
+                                self.coin[f]=0
                     
 
                             
                     #print(self.imgPytns.sprite_list[i])
+        # Стрелка
+        self.Strelka1.center_x =self.Strelka1.width // 3
+        self.Strelka1.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka1.draw()
+        
+        # Назад
+        self.MenuFirst2 = 9
+        self.MenuLasti = 1
+
+        mx = self.mouseX
+        my = self.mouseY
+        width = 400
+        height=15
+        self.MenuItemSelected_2 = -1
+
+        for i in range(0,self.MenuLasti):
+            text = "Назад"
+            text_size = 35
+            x = self.Strelka1.width//9
+            y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+                color = self.menucolorselected
+                self.MenuItemSelected = 2
+            else:
+                color = self.menucolor
+            arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
+        
+
         # Стрелка
         self.Strelka.center_x = self.SCREEN_WIDTH // 1.3 + 35
         self.Strelka.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
@@ -2377,7 +2584,461 @@ class TApp(arcade.Window):
         my = self.mouseY
         width = 400
         height=15
-        self.MenuItemSelected = 5
+
+        for i in range(0,self.MenuLasti):
+            text = self.Menu[self.MenuFirst2+i]
+            text_size = 35
+            x = self.SCREEN_WIDTH // 1.3
+            y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+                color = self.menucolorselected
+                self.MenuItemSelected = 10
+                self.schet_card=1
+                self.coin_2=[0,0,0,0,0,0]
+            else:
+                color = self.menucolor
+            arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
+
+        # Рисуем крестик
+        self.aboutLogo1.center_x = self.SCREEN_WIDTH - 0.5*self.aboutLogo1.width
+        self.aboutLogo1.center_y = self.SCREEN_HEIGHT -(0.5*self.aboutLogo1.height)
+        self.aboutLogo1.draw()
+        # Определяем попадание курсора на крестик
+        bottom =self.mouseY > self.aboutLogo1.center_y - self.aboutLogo1.height // 2
+        top = self.mouseY < self.aboutLogo1.center_y + self.aboutLogo1.height // 2
+
+        left = self.mouseX > self.aboutLogo1.center_x - self.aboutLogo1.width // 2
+        right = self.mouseX < self.aboutLogo1.center_x + self.aboutLogo1.width // 2
+
+        if (bottom and top) and (left and right):
+            arcade.draw_rectangle_outline(self.aboutLogo1.center_x,self.aboutLogo1.center_y,self.aboutLogo1.width,self.aboutLogo1.height,color=arcade.color.FELDSPAR)
+            if self.isMouseDown:
+                self.MenuItemSelected = 98
+
+    def drawState10(self):
+        self.MenuItemSelected = 10
+        self.clic = 0
+        lop=0
+        # Игра Пятнашки 2
+        self.text="Пятнашки 2"
+        text = "Игра Пятнашки"
+        color = self.titlecolor
+        text_size = 38
+        x = self.SCREEN_WIDTH // 2.7
+        y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 12
+        arcade.draw_text(text,x, y,color, text_size, anchor_y = "center",font_name = "Comic Sans MS")
+
+        self.imgAvatars.sprite_list[self.userAvatar].center_x = self.imgAvatars.sprite_list[self.userAvatar].width
+        self.imgAvatars.sprite_list[self.userAvatar].center_y = self.SCREEN_HEIGHT - self.imgAvatars.sprite_list[self.userAvatar].height
+        self.imgAvatars.sprite_list[self.userAvatar].draw()
+
+
+        #Создаем сами картинки
+
+        
+        if self.userChoiceCards==0:
+            files = os.listdir(self.detectivePath1)
+        elif self.userChoiceCards==1:
+            files = os.listdir(self.detectivePath2)
+
+        self.imgPytns_2 = arcade.SpriteList()
+
+        for j in range(0,6):
+            for i in files:
+                k=str(self.RAND_2[j]+1)+'.jpg'
+                if str(i)==k:
+                    
+                    if self.userChoiceCards==0:
+                        self.imgPytn = arcade.Sprite(self.detectivePath1+i, 1)
+                    
+                    elif self.userChoiceCards == 1:
+                        self.imgPytn = arcade.Sprite(self.detectivePath2+i, 1)
+                    #self.imgPytn = arcade.Sprite(self.detectivePath1+i, 1)
+                    self.imgPytn.width = 150
+                    self.imgPytn.height = 250
+                    self.imgPytn.center_x = 0
+                    self.imgPytn.center_y = 0
+                    self.imgPytns_2.append(self.imgPytn)
+
+        #self.imgAvatars.draw()
+        # Вывод конкретного спрайта
+        w=self.imgPytns_2.sprite_list[1].width
+        h=self.imgPytns_2.sprite_list[1].height
+        counter = 3
+        s = 20
+        x = self.SCREEN_WIDTH // 2 - (counter * w) // 3
+        y = self.SCREEN_HEIGHT // 3
+        for i in range(0,len(self.imgPytns_2.sprite_list)):
+            self.imgPytns_2.sprite_list[i].center_x = x
+            x += w + s
+            self.imgPytns_2.sprite_list[i].center_y = y
+            counter -=1
+            if counter <=0:
+                counter = 3
+                x = self.SCREEN_WIDTH // 2 - (counter * w) // 3
+                y += h + s
+        
+            #self.imgPytns_1.sprite_list[i].draw()'''
+        #Создаем "рубашки" карточек
+        files = os.listdir(self.detectivePath8)
+
+        self.imgPytns = arcade.SpriteList()
+
+        for i in files:
+            self.imgPytn = arcade.Sprite(self.detectivePath8+i, 1)
+            self.imgPytn.width = 150
+            self.imgPytn.height = 250
+            self.imgPytn.center_x = 0
+            self.imgPytn.center_y = 0
+            self.imgPytns.append(self.imgPytn)
+
+        #self.imgAvatars.draw()
+        # Вывод конкретного спрайта
+        w=self.imgPytns.sprite_list[1].width
+        h=self.imgPytns.sprite_list[1].height
+        counter = 3
+        s = 20
+        x = self.SCREEN_WIDTH // 2 - (counter * w) // 3
+        y = self.SCREEN_HEIGHT // 3
+        for i in range(0,len(self.imgPytns.sprite_list)):
+            self.imgPytns.sprite_list[i].center_x = x
+            x += w + s
+            self.imgPytns.sprite_list[i].center_y = y
+            counter -=1
+            if counter <=0:
+                counter = 3
+                x = self.SCREEN_WIDTH // 2 - (counter * w) // 3
+                y += h + s
+                
+            if self.coin_2[i] == 0:
+                self.imgPytns.sprite_list[i].draw()
+            elif self.coin_2[i] == 1:
+                self.imgPytns_2.sprite_list[i].draw()
+            if self.coin_2[i] == -1:
+                #arcade.pause(1)
+                pass
+                
+
+
+            # Определяем попадание курсора на аватар
+            bottom =self.mouseY > self.imgPytns.sprite_list[i].center_y - self.imgPytns.sprite_list[i].height // 2
+            top = self.mouseY < self.imgPytns.sprite_list[i].center_y + self.imgPytns.sprite_list[i].height // 2
+
+            left = self.mouseX > self.imgPytns.sprite_list[i].center_x - self.imgPytns.sprite_list[i].width // 2
+            right = self.mouseX < self.imgPytns.sprite_list[i].center_x + self.imgPytns.sprite_list[i].width // 2
+
+            if (bottom and top) and (left and right):
+                arcade.draw_rectangle_outline(self.imgPytns.sprite_list[i].center_x,self.imgPytns.sprite_list[i].center_y,self.imgPytns.sprite_list[i].width,self.imgPytns.sprite_list[i].height,color=arcade.color.FELDSPAR)
+                if self.isMouseDown:
+                    if (self.schet_card>1) and (self.schet_card<3):
+                        k=str(self.RAND_2[i]+1)+'.jpg'
+                        #print('номер карточки ',k)
+                        #print(i)
+                        #print(k)
+                        if self.coin_2[i]==0:
+                            self.coin_2[i]=1
+                        #print(self.coin_2)
+                        #print("нажал",self.schet_card)
+                        self.imgPytns_2.sprite_list[i].draw()
+                        for c in range(0, len(self.coin_2)-1):
+                            for s in range(1, len(self.coin_2)):
+                                if (self.coin_2[c]==1) and (self.coin_2[s]==1) and (self.RAND_2[c]==self.RAND_2[s]) and (c!=s):
+                                    self.imgPytns_2.sprite_list[i].draw()
+                                    #print(c, self.coin_2[c], s, self.coin_2[s], self.RAND_2[c], self.RAND_2[s])
+                                    arcade.pause(0.1)
+                                    self.coin_2[c]=-1
+                                    self.coin_2[s]=-1
+                                    self.schet_card=1
+                                    #print(self.coin)
+                                elif (self.coin_2[c]==1) and (self.coin_2[s]==1) and (self.RAND_2[c]!=self.RAND_2[s]) and (c!=s):
+                                    self.coin_2[c]=0
+                                    self.coin_2[s]=0
+                                    self.coin_2[i]=0
+                                    self.schet_card=1
+                                #print(self.coin_2)
+                        self.schet_card=1
+                    elif self.schet_card>2:
+                        self.schet_card=1
+                        for f in range(0, len(self.coin_2)):
+                            if self.coin_2[f] != -1:
+                                self.coin_2[f]=0
+                    
+
+                            
+                    #print(self.imgPytns.sprite_list[i])
+        # Стрелка
+        self.Strelka1.center_x =self.Strelka1.width // 3
+        self.Strelka1.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka1.draw()
+        
+        # Назад
+        self.MenuFirst2 = 9
+        self.MenuLasti = 1
+
+        mx = self.mouseX
+        my = self.mouseY
+        width = 400
+        height=15
+        self.MenuItemSelected_2 = -1
+
+        for i in range(0,self.MenuLasti):
+            text = "Назад"
+            text_size = 35
+            x = self.Strelka1.width//9
+            y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+                color = self.menucolorselected
+                self.MenuItemSelected = 5
+                self.coin=[0,0,0,0]
+                self.schet_card=1
+                
+            else:
+                color = self.menucolor
+            arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
+        
+
+        # Стрелка
+        self.Strelka.center_x = self.SCREEN_WIDTH // 1.3 + 35
+        self.Strelka.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka.draw()
+
+        
+            # Дальше
+        self.MenuFirst2 = 9
+        self.MenuLasti = 1
+
+        mx = self.mouseX
+        my = self.mouseY
+        width = 400
+        height=15
+
+        for i in range(0,self.MenuLasti):
+            text = self.Menu[self.MenuFirst2+i]
+            text_size = 35
+            x = self.SCREEN_WIDTH // 1.3
+            y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+                color = self.menucolorselected
+                self.MenuItemSelected = 11
+                self.coin_3=[0,0,0,0,0,0]
+                self.schet_card=1
+            else:
+                color = self.menucolor
+            arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
+
+        # Рисуем крестик
+        self.aboutLogo1.center_x = self.SCREEN_WIDTH - 0.5*self.aboutLogo1.width
+        self.aboutLogo1.center_y = self.SCREEN_HEIGHT -(0.5*self.aboutLogo1.height)
+        self.aboutLogo1.draw()
+        # Определяем попадание курсора на крестик
+        bottom =self.mouseY > self.aboutLogo1.center_y - self.aboutLogo1.height // 2
+        top = self.mouseY < self.aboutLogo1.center_y + self.aboutLogo1.height // 2
+
+        left = self.mouseX > self.aboutLogo1.center_x - self.aboutLogo1.width // 2
+        right = self.mouseX < self.aboutLogo1.center_x + self.aboutLogo1.width // 2
+
+        if (bottom and top) and (left and right):
+            arcade.draw_rectangle_outline(self.aboutLogo1.center_x,self.aboutLogo1.center_y,self.aboutLogo1.width,self.aboutLogo1.height,color=arcade.color.FELDSPAR)
+            if self.isMouseDown:
+                self.MenuItemSelected = 98
+
+
+    def drawState11(self):
+        self.MenuItemSelected = 11
+        self.clic = 0
+        lop=0
+        # Игра Пятнашки 3
+        self.text="Пятнашки 3"
+        text = "Игра Пятнашки"
+        color = self.titlecolor
+        text_size = 38
+        x = self.SCREEN_WIDTH // 2.7
+        y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 12
+        arcade.draw_text(text,x, y,color, text_size, anchor_y = "center",font_name = "Comic Sans MS")
+
+        self.imgAvatars.sprite_list[self.userAvatar].center_x = self.imgAvatars.sprite_list[self.userAvatar].width
+        self.imgAvatars.sprite_list[self.userAvatar].center_y = self.SCREEN_HEIGHT - self.imgAvatars.sprite_list[self.userAvatar].height
+        self.imgAvatars.sprite_list[self.userAvatar].draw()
+
+
+        #Создаем сами картинки
+
+        
+        if self.userChoiceCards==0:
+            files = os.listdir(self.detectivePath1)
+        elif self.userChoiceCards==1:
+            files = os.listdir(self.detectivePath2)
+
+        self.imgPytns_3 = arcade.SpriteList()
+
+        for j in range(0,6):
+            for i in files:
+                k=str(self.RAND_3[j]+1)+'.jpg'
+                if str(i)==k:
+                    
+                    if self.userChoiceCards==0:
+                        self.imgPytn = arcade.Sprite(self.detectivePath1+i, 1)
+                    
+                    elif self.userChoiceCards == 1:
+                        self.imgPytn = arcade.Sprite(self.detectivePath2+i, 1)
+                    #self.imgPytn = arcade.Sprite(self.detectivePath1+i, 1)
+                    self.imgPytn.width = 150
+                    self.imgPytn.height = 250
+                    self.imgPytn.center_x = 0
+                    self.imgPytn.center_y = 0
+                    self.imgPytns_3.append(self.imgPytn)
+
+        #self.imgAvatars.draw()
+        # Вывод конкретного спрайта
+        w=self.imgPytns_3.sprite_list[1].width
+        h=self.imgPytns_3.sprite_list[1].height
+        counter = 3
+        s = 20
+        x = self.SCREEN_WIDTH // 2 - (counter * w) // 3
+        y = self.SCREEN_HEIGHT // 3
+        for i in range(0,len(self.imgPytns_3.sprite_list)):
+            self.imgPytns_3.sprite_list[i].center_x = x
+            x += w + s
+            self.imgPytns_3.sprite_list[i].center_y = y
+            counter -=1
+            if counter <=0:
+                counter = 3
+                x = self.SCREEN_WIDTH // 2 - (counter * w) // 3
+                y += h + s
+        
+            #self.imgPytns_1.sprite_list[i].draw()
+        #Создаем "рубашки" карточек
+        files = os.listdir(self.detectivePath8)
+
+        self.imgPytns = arcade.SpriteList()
+
+        for i in files:
+            self.imgPytn = arcade.Sprite(self.detectivePath8+i, 1)
+            self.imgPytn.width = 150
+            self.imgPytn.height = 250
+            self.imgPytn.center_x = 0
+            self.imgPytn.center_y = 0
+            self.imgPytns.append(self.imgPytn)
+
+        #self.imgAvatars.draw()
+        # Вывод конкретного спрайта
+        w=self.imgPytns.sprite_list[1].width
+        h=self.imgPytns.sprite_list[1].height
+        counter = 3
+        s = 20
+        x = self.SCREEN_WIDTH // 2 - (counter * w) // 3
+        y = self.SCREEN_HEIGHT // 3
+        for i in range(0,len(self.imgPytns.sprite_list)):
+            self.imgPytns.sprite_list[i].center_x = x
+            x += w + s
+            self.imgPytns.sprite_list[i].center_y = y
+            counter -=1
+            if counter <=0:
+                counter = 3
+                x = self.SCREEN_WIDTH // 2 - (counter * w) // 3
+                y += h + s
+                
+            if self.coin_3[i] == 0:
+                self.imgPytns.sprite_list[i].draw()
+            elif self.coin_3[i] == 1:
+                self.imgPytns_3.sprite_list[i].draw()
+            if self.coin_3[i] == -1:
+                #arcade.pause(1)
+                pass
+                
+
+
+            # Определяем попадание курсора на аватар
+            bottom =self.mouseY > self.imgPytns.sprite_list[i].center_y - self.imgPytns.sprite_list[i].height // 2
+            top = self.mouseY < self.imgPytns.sprite_list[i].center_y + self.imgPytns.sprite_list[i].height // 2
+
+            left = self.mouseX > self.imgPytns.sprite_list[i].center_x - self.imgPytns.sprite_list[i].width // 2
+            right = self.mouseX < self.imgPytns.sprite_list[i].center_x + self.imgPytns.sprite_list[i].width // 2
+
+            if (bottom and top) and (left and right):
+                arcade.draw_rectangle_outline(self.imgPytns.sprite_list[i].center_x,self.imgPytns.sprite_list[i].center_y,self.imgPytns.sprite_list[i].width,self.imgPytns.sprite_list[i].height,color=arcade.color.FELDSPAR)
+                if self.isMouseDown:
+                    if (self.schet_card>1) and (self.schet_card<3):
+                        k=str(self.RAND_3[i]+1)+'.jpg'
+                        #print('номер карточки ',k)
+                        #print(i)
+                        #print(k)
+                        if self.coin_3[i]==0:
+                            self.coin_3[i]=1
+                        #print(self.coin_3)
+                        #print("нажал",self.schet_card)
+                        self.imgPytns_3.sprite_list[i].draw()
+                        for c in range(0, len(self.coin_3)-1):
+                            for s in range(1, len(self.coin_3)):
+                                if (self.coin_3[c]==1) and (self.coin_3[s]==1) and (self.RAND_3[c]==self.RAND_3[s]) and (c!=s):
+                                    self.imgPytns_3.sprite_list[i].draw()
+                                    #print(c, self.coin_3[c], s, self.coin_3[s], self.RAND_3[c], self.RAND_3[s])
+                                    arcade.pause(0.1)
+                                    self.coin_3[c]=-1
+                                    self.coin_3[s]=-1
+                                    self.schet_card=1
+                                    #print(self.coin)
+                                elif (self.coin_3[c]==1) and (self.coin_3[s]==1) and (self.RAND_3[c]!=self.RAND_3[s]) and (c!=s):
+                                    self.coin_3[c]=0
+                                    self.coin_3[s]=0
+                                    self.coin_3[i]=0
+                                    self.schet_card=1
+                                #print(self.coin_3)
+                        self.schet_card=1
+                    elif self.schet_card>2:
+                        self.schet_card=1
+                        for f in range(0, len(self.coin_3)):
+                            if self.coin_3[f] != -1:
+                                self.coin_3[f]=0
+                    
+
+                            
+                    #print(self.imgPytns.sprite_list[i])
+        # Стрелка
+        self.Strelka1.center_x =self.Strelka1.width // 3
+        self.Strelka1.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka1.draw()
+        
+        # Назад
+        self.MenuFirst2 = 9
+        self.MenuLasti = 1
+
+        mx = self.mouseX
+        my = self.mouseY
+        width = 400
+        height=15
+        self.MenuItemSelected_2 = -1
+
+        for i in range(0,self.MenuLasti):
+            text = "Назад"
+            text_size = 35
+            x = self.Strelka1.width//9
+            y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2
+            if my>y-height and my<y+height and mx>x-width//2 and mx<x+width//2:
+                color = self.menucolorselected
+                self.MenuItemSelected = 10
+                self.coin_2=[0,0,0,0,0,0]
+                self.schet_card=1
+                
+            else:
+                color = self.menucolor
+            arcade.draw_text(text, x, y,color, text_size, font_name = self.font_title)
+        
+
+        # Стрелка
+        self.Strelka.center_x = self.SCREEN_WIDTH // 1.3 + 35
+        self.Strelka.center_y = self.SCREEN_HEIGHT  - self.SCREEN_HEIGHT // 1.2 
+        self.Strelka.draw()
+
+        
+            # Дальше
+        self.MenuFirst2 = 9
+        self.MenuLasti = 1
+
+        mx = self.mouseX
+        my = self.mouseY
+        width = 400
+        height=15
 
         for i in range(0,self.MenuLasti):
             text = self.Menu[self.MenuFirst2+i]
@@ -2413,27 +3074,27 @@ class TApp(arcade.Window):
         """Обработка верных/неверных отетов"""
         if self.otvet==self.vernotvet:
             self.userGoodAnswers += 1
-            print("верные ответы:", self.userGoodAnswers)
-            print("неверные ответы:", self.userBadAnswers)
+            #print("верные ответы:", self.userGoodAnswers)
+            #print("неверные ответы:", self.userBadAnswers)
             f = open('vern.txt', 'r')
             Alf=f.readlines()
             for i in range(0,8):
                 if self.userAvatar == i:
                     Alf[i]=str(int(Alf[i])+1)+'\n'
             f.close()
-            print(Alf)
+            #print(Alf)
             f = open('vern.txt', 'w')
             f.writelines("%s" % j for j in Alf)
             f.close()
             self.state=self.sl
             self.otvet=-1
-            self.aboutLogo1.center_x = self.SCREEN_WIDTH 
+            '''self.aboutLogo1.center_x = self.SCREEN_WIDTH 
             self.aboutLogo1.center_y = self.SCREEN_HEIGHT 
-            self.aboutLogo1.draw()
+            self.aboutLogo1.draw()'''
         else:
             self.userBadAnswers += 1
-            print("верные ответы:", self.userGoodAnswers)
-            print("неверные ответы:", self.userBadAnswers)
+            #print("верные ответы:", self.userGoodAnswers)
+            #print("неверные ответы:", self.userBadAnswers)
             f = open('nevern.txt', 'r')
             Alf=f.readlines()
             for i in range(0,8):
@@ -2472,6 +3133,10 @@ class TApp(arcade.Window):
                 self.state=2
             elif self.state == 6:
                 self.state=3
+            elif self.state == 8:
+                self.state=4
+            elif self.state == 10:
+                self.state=5
             elif self.state > 6 and self.state < 12:
                 self.state=self.state-1
             #elif self.state == 9:
@@ -2489,7 +3154,7 @@ class TApp(arcade.Window):
 
     def on_mouse_press(self, x, y, button, modifiers):
         """ Когда кнопка мыши нажата """
-        print(f"You clicked button number: {button}")
+        #print(f"You clicked button number: {button}")
         if button == arcade.MOUSE_BUTTON_LEFT:
             self.bgGUIColor  = arcade.color.GREEN
             self.isMouseDown = True
@@ -2498,9 +3163,9 @@ class TApp(arcade.Window):
     def on_mouse_release(self, x, y, button, modifiers):
         """ Когда кнопка мыши отпущена """
         if button == arcade.MOUSE_BUTTON_LEFT:
-            if self.text=="Пятнашки":
+            if (self.text=="Пятнашки") or (self.text=="Пятнашки 2") or (self.text=="Пятнашки 3"):
                 self.schet_card=self.schet_card+1
-                print('всего нажато ', self.schet_card)
+                #print('всего нажато ', self.schet_card)
             self.tri_two=0
             self.tri_one=0
             #if self.otvet == 
@@ -2513,8 +3178,8 @@ class TApp(arcade.Window):
             if self.MenuItemSelected == 51:
                 self.state = self.MenuItemSelected
 
-            if self.MenuItemSelected>0 and self.MenuItemSelected <=20:
-                print("Перключаемся в состояние %s"%(self.MenuItemSelected))
+            if self.MenuItemSelected>-1 and self.MenuItemSelected <=21:
+                #print("Перключаемся в состояние %s"%(self.MenuItemSelected))
                 self.state = self.MenuItemSelected
 
             if self.MenuItemSelected == 97:
