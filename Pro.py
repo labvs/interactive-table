@@ -6,6 +6,7 @@ import random
 import pyglet
 import typing
 
+
 # Включение и отключение вывода отладочных сообщений
 DEBUG = True
 
@@ -354,7 +355,7 @@ class TApp(arcade.Window):
         load_sound_library()
         sound.play()
 
-    def stop_sound(sound: pyglet.media.Source):
+    def stop_sound(sound: typing.Any):
         """
         Stop a sound that is currently playing.
 
@@ -1178,7 +1179,6 @@ class TApp(arcade.Window):
         my = self.mouseY
         width = 400
         height=15
-        self.MenuItemSelected_2 = -1
 
         for i in range(0,self.MenuLasti):
             text = self.Menu[self.MenuFirst2+i]
@@ -1262,6 +1262,7 @@ class TApp(arcade.Window):
             if (self.isMouseDown) and (self.tri_one==0):
                 self.odin=0
                 self.StateSound()
+                self.MenuItemSelected = 3
 
                 
                 
@@ -1366,6 +1367,7 @@ class TApp(arcade.Window):
         elif self.text=="Подбери маску 3":
             if (self.userChoiceCards==0) and (self.tri==0):
                 arcade.play_sound(arcade.load_sound('music/Подбери маску 3 0.wav'))
+                self.Sound=arcade.load_sound('music/Подбери маску 3 0.wav')
                 self.tri=1
                 self.state == 9
                 self.tri_one=1
@@ -1992,7 +1994,6 @@ class TApp(arcade.Window):
     def drawState8(self):
         self.vernotvet=1
         # Игра Подбери маску 2
-        print(self.otvet)
         text = "Игра Подбери маску"
         self.text = "Подбери маску 2"
         color = self.titlecolor
@@ -2092,10 +2093,12 @@ class TApp(arcade.Window):
                     if (self.otvet==self.vernotvet) and (self.tri_one==0):
                         self.StateSound()
                         self.e=1
+                        self.MenuItemSelected = 8
                     elif (self.otvet!=self.vernotvet) and (self.tri_two==0):
                         self.StateSound()
                         self.e=1
-                    print(self.otvet)
+                        self.MenuItemSelected = 8
+                    
 
 
         # Стрелка
@@ -2149,7 +2152,7 @@ class TApp(arcade.Window):
                 if self.isMouseDown:
                     color = self.menucolorselected
                     self.sl=9
-                    #self.MenuItemSelected = 97
+                    self.MenuItemSelected = 97
                     self.e=0
             else:
                 color = self.menucolor
@@ -2209,7 +2212,7 @@ class TApp(arcade.Window):
             if self.e==0:
                 self.aboutLogo2 = arcade.Sprite(self.detectivePath4 + "1_1.png",0.19)
             else:
-                print(self.otvet)
+                #print(self.otvet)
                 self.aboutLogo2 = arcade.Sprite(self.detectivePath7 + str(self.otvet+1)+".png",0.19)
             text = "Наташа очень любит солнечную погоду. Сегодня на "
             text2 = "улице светит солнце. Какое у неё настроение?"
@@ -2291,9 +2294,11 @@ class TApp(arcade.Window):
                     if (self.otvet==self.vernotvet) and (self.tri_one==0):
                         self.StateSound()
                         self.e=1
+                        self.MenuItemSelected = 9
                     elif (self.otvet!=self.vernotvet) and (self.tri_two==0):
                         self.StateSound()
                         self.e=1
+                        self.MenuItemSelected = 9
 
         
         # Стрелка
